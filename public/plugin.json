@@ -1,0 +1,35 @@
+{
+  "main": "index.html",
+  "logo": "logo.jpeg",
+  "preload": "preload.js",
+  "platform": ["darwin"],
+  "development": {
+    "main": "http://127.0.0.1:3100"
+  },
+  "features": [
+    {
+      "code": "webp",
+      "explain": "压缩图片",
+      "cmds": [
+        "webp",
+        "压缩图片",
+        {
+          "type": "files",
+          "fileType": "file",
+          "match": "/\\.(png|jpeg|jpg)$/i",
+          "label": "webp压缩图片"
+        },
+        {
+          "type": "files",
+          "fileType": "directory",
+          "label": "压缩此文件夹下所有图片"
+        },
+        {
+          "type": "window",
+          "match": { "app": ["Finder.app", "explorer.exe", "SearchApp.exe"], "class": ["CabinetWClass", "ExploreWClass"] },
+          "label": "压缩此文件夹下所有图片"
+        }
+      ]
+    }
+  ]
+}
