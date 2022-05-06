@@ -6,6 +6,8 @@
 
 下载 [utools](https://u.tools/) 搜索插件 `webp`
 
+![](https://github.com/bravekingzhang/utools-plugin-webp/blob/main/doc/0.jpg)
+![](https://github.com/bravekingzhang/utools-plugin-webp/blob/main/doc/1.jpg)
 
 ## 版本记录
 
