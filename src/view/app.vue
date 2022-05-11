@@ -245,6 +245,11 @@ export default defineComponent({
           handleWebpNotInstall();
         });
 
+        list.value[idx].webpCompress.on('error:webp-not-support', (err) => {
+          console.log('error:webp-not-support',err);
+          handlePhotoNotSupport(err);
+        });
+
         list.value[idx] = { ...list.value[idx], error: '' };
         console.log('start to compress');
         list.value[idx].webpCompress.compress();
@@ -253,6 +258,12 @@ export default defineComponent({
 
     function handleWebpNotInstall() {
       ElMessageBox.alert('cwebp未安装，请先安装cwebp！ mac上面使用 [brew install webp]', {}).then(() => {}).catch(() => {});
+    }
+
+
+     // 一般来讲，长度太长的图不支持
+     function handlePhotoNotSupport(err:string) {
+      ElMessageBox.alert(`图片不支持转webp:${err}`, {}).then(() => {}).catch(() => {});
     }
 
     async function handleReplaces(list: Webp.List[]) {

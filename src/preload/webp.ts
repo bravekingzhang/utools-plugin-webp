@@ -22,7 +22,8 @@ function runCommand(command: string,callback: (arg0: ExecException | null, stdou
 interface EventKeys {
   'success:compress': Webp.Response;
   'success:download': number;
-  'error:webp-bin-not-found':void
+  'error:webp-bin-not-found':void;
+  'error:webp-not-support':string;
 }
 
 export interface WebpCompress {
@@ -30,6 +31,7 @@ export interface WebpCompress {
   emit<K extends keyof EventKeys>(event: K, v: EventKeys[K]): boolean;
   emit(event: 'success:download'): boolean;
   emit(event: 'error:webp-bin-not-found'): boolean;
+  emit(event: 'error:error:webp-not-support'): boolean;
 }
 
 export class WebpCompress extends Events {
@@ -46,7 +48,11 @@ export class WebpCompress extends Events {
     console.log('compress is doing ...');
     runCommand(`/usr/local/bin/cwebp -q 100 ${this.filePath} -o ${this.downloadPath} -progress`, (err, stdout, stderr) => {
       if (err){
-        this.emit('error:webp-bin-not-found');
+        if(`${stderr}`.indexOf('command not found')!=-1){
+          this.emit('error:webp-bin-not-found');
+        }else{
+          this.emit('error:webp-not-support',`${stderr}`)
+        }
       }
       else{
         this.emit('success:compress', {
